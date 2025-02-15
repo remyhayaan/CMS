@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Sidebar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+    }
+
+        .sidebar {
+          width: 20px;
+          background-color: #166534; /* Green */
+          color: white;
+          padding: 20px;
+          height: 100vh;
+          position: fixed;
+          top: 0;
+          left: 0;
+          overflow-y: auto; /* Enables scrolling when content overflows */
+          max-height: 100vh; /* Prevents overflow beyond viewport */
+        }
+      
+
+    .sidebar ul {
+      list-style-type: none;
+      margin-top: 20px;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #14532d; /* Darker green */
+    }
+
+    .content {
+      margin-left: 220px;
+      flex-grow: 1;
+      background-color: #f0fdf4; /* Light green background */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content iframe {
+      flex-grow: 1;
+      width: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar (Green Theme) -->
+  <div class="sidebar">
+    <h2 class="text-white text-lg font-bold flex items-center">
+      <img src="https://via.placeholder.com/40" class="mr-2 rounded-full" alt="Logo">
+      DavSafaris
+    </h2>
+    <ul>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="dashboards.html" target="contentFrame">📊 Dashboard</a></li>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="users.html" target="contentFrame">📅 Bookings</a></li>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="tours.html" target="contentFrame">🏞 Tours</a></li>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="blog.html" target="contentFrame">⭐ Safari Updates</a></li>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="clients.html"  target="contentFrame">📍 Client Reviews</li></a>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="countries.html" target="contentFrame">📂 Countries</li></a>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="agents.html" target="contentFrame">👥 Agents</li></a>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="employees.html" target="contentFrame"> 📩 Subscribers</li></a>
+      <li class="p-2 hover:bg-green-600 rounded"><a href="pages.html" target="contentFrame"> 📩 Pages</li></a>
+     
+      <li class="mt-10">
+        <button class="w-full text-red-600 font-semibold hover:text-red-800">🚪 Logout</button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content (Starts below Sidebar) -->
+  <div class="content">
+    <!-- Dashboard Overview inside the content -->
+    <div class="bg-green-100 p-4 shadow flex justify-between items-center w-full">
+      <button class="text-green-700 text-2xl">☰</button>
+      <div class="text-lg font-semibold text-green-900">Dashboard Overview</div>
+      <div class="rounded-full bg-green-300 text-green-900 font-bold h-10 w-10 flex items-center justify-center">RE</div>
+    </div>
+
+    <!-- Embedded Page Content -->
+    <iframe id="contentFrame" name="contentFrame" src="dashboards.html" frameborder="0"></iframe>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sidebar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            background-color: #f9fafb;
+        }
+    
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+    
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #26b575, #32543f);
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            max-height: 100vh;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+    
+        .sidebar.closed {
+            transform: translateX(-250px);
+        }
+    
+        .sidebar ul {
+            list-style-type: none;
+            margin-top: 30px;
+        }
+    
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+    
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: background 0.3s ease, padding-left 0.3s ease;
+        }
+    
+        .sidebar ul li a:hover {
+            background-color: #14532d;
+            padding-left: 24px;
+        }
+    
+        .content {
+            margin-left: 250px;
+            flex-grow: 1;
+            background-color: #f0fdf4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: margin-left 0.3s ease-in-out;
+            padding: 20px;
+        }
+    
+        .content iframe {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+        }
+    
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #4CAF50; /* Updated green */
+            transition: color 0.3s ease;
+        }
+    
+        .menu-btn:hover {
+            color: #388E3C; /* Darker green for hover effect */
+        }
+    
+        .search-icon {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 20px;
+            color: #4CAF50; /* Updated green */
+        }
+    
+        .header {
+            background-color: #fff;
+            padding: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .header .menu-btn {
+            display: block;
+        }
+    
+        .header .user-circle {
+            background-color: #4CAF50; /* Updated green */
+            color: white;
+            font-weight: bold;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    
+        .sidebar .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+            display: none;
+        }
+    
+        .search-modal .closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #4CAF50; /* Updated green */
+            cursor: pointer;
+        }
+    
+        .search-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+        }
+    
+        .search-modal.active {
+            display: flex;
+        }
+    
+        .search-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+    
+        .search-modal input {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+        }
+    
+        .search-modal button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Updated green */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    
+        .search-modal button:hover {
+            background-color: #388E3C; /* Darker green for hover effect */
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #388E3C; /* Darker green for hover effect */
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-250px);
+                position: fixed;
+                z-index: 1001; /* Keep sidebar above modal on small screens */
+                width: 250px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+            .sidebar .close-btn {
+                display: block; /* Show only on small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">✖</button>
+    
+        <h2 class="text-white text-lg font-bold flex items-center mt-4">
+            <img src="https://via.placeholder.com/40" class="mr-2 rounded-full" alt="Logo">
+            DavSafaris
+        </h2>
+    
+        <ul id="sidebarMenu">
+            <li><a href="dashboards.html" target="contentFrame"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="users.html" target="contentFrame"><i class="fas fa-calendar-alt"></i> Bookings</a></li>
+            <li><a href="tours.html" target="contentFrame"><i class="fas fa-hiking"></i> Tours</a></li>
+            <li><a href="blog.html" target="contentFrame"><i class="fas fa-map-marker-alt"></i> Safari Updates</a></li>
+            <li><a href="clients.html" target="contentFrame"><i class="fas fa-star"></i> Client Reviews</a></li>
+            <li><a href="countries.html" target="contentFrame"><i class="fas fa-folder"></i> Countries</a></li>
+            <li><a href="agents.html" target="contentFrame"><i class="fas fa-users"></i> Agents</a></li>
+            <li><a href="employees.html" target="contentFrame"><i class="fas fa-envelope"></i> Subscribers</a></li>
+            <li><a href="pages.html" target="contentFrame"><i class="fas fa-file"></i> Pages</a></li>
+            <li class="mt-10">
+                <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="content" id="content">
+        <div class="header">
+            <button class="menu-btn text-green-700 text-2xl" onclick="toggleSidebar()">☰</button>
+            <div class="flex-grow"></div>
+            <div class="search-icon" onclick="toggleSearchModal()"><i class="fas fa-search"></i></div>
+            <div class="user-circle">RE</div>
+        </div>
+    
+        <iframe id="contentFrame" name="contentFrame" src="dashboards.html" frameborder="0"></iframe>
+    </div>
+    
+    <div class="search-modal" id="searchModal">
+        <div class="modal-content">
+            <button class="closeBtn" onclick="toggleSearchModal()">×</button>
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchMenu()">Search</button>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    
+        function toggleSearchModal() {
+            const modal = document.getElementById('searchModal');
+            modal.classList.toggle('active');
+        }
+    
+        function searchMenu() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const menuItems = document.querySelectorAll('#sidebarMenu li');
+    
+            menuItems.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                item.style.display = text.includes(searchInput) ? 'block' : 'none';
+            });
+        }
+    
+        const searchModal = document.getElementById('searchModal');
+        searchModal.addEventListener('click', (event) => {
+            if (event.target === searchModal) {
+                toggleSearchModal();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

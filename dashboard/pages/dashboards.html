@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Main Content -->
+    <div class="flex-1 p-4">
+        <!-- Stats Overview -->
+        <div class="flex flex-wrap gap-2 mt-4 justify-between">
+            <div class="bg-white p-4 shadow rounded-lg text-center w-full sm:w-32 md:w-40 lg:w-1/5">
+                <p class="text-gray-500">📅 Bookings</p>
+                <p class="text-green-600 text-2xl font-bold">260</p>
+            </div>
+            <div class="bg-white p-4 shadow rounded-lg text-center w-full sm:w-32 md:w-40 lg:w-1/5">
+                <p class="text-gray-500">🏷 Packages</p>
+                <p class="text-green-600 text-2xl font-bold">100</p>
+            </div>
+            <div class="bg-white p-4 shadow rounded-lg text-center w-full sm:w-32 md:w-40 lg:w-1/5">
+                <p class="text-gray-500">📌 Updates</p>
+                <p class="text-green-600 text-2xl font-bold">69</p>
+            </div>
+            <div class="bg-white p-4 shadow rounded-lg text-center w-full sm:w-32 md:w-40 lg:w-1/5">
+                <p class="text-gray-500">🌍 Countries</p>
+                <p class="text-green-600 text-2xl font-bold">48</p>
+            </div>
+            <div class="bg-white p-4 shadow rounded-lg text-center w-full sm:w-32 md:w-40 lg:w-1/5">
+                <p class="text-gray-500">👥 Agents</p>
+                <p class="text-green-600 text-2xl font-bold">3</p>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+            <div class="bg-white p-4 shadow rounded-lg">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-green-700">Number of Bookings</h3>
+                    <select id="yearSelect" class="border rounded-lg px-2 py-1 text-gray-700">
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+                <canvas id="bookingsChart"></canvas>
+            </div>
+            <div class="bg-white p-4 shadow rounded-lg">
+                <h3 class="text-lg font-semibold text-green-700">Bookings by Countries</h3>
+                <canvas id="countriesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const yearData = {
+            2025: [52, 30, 45, 20, 35, 40],
+            2024: [40, 25, 35, 30, 20, 25],
+            2023: [30, 15, 25, 10, 40, 20]
+        };
+
+        // Chart for Number of Bookings
+        const ctx1 = document.getElementById('bookingsChart').getContext('2d');
+        let bookingsChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Bookings',
+                    data: yearData[2025],
+                    backgroundColor: 'rgba(34, 197, 94, 0.6)',
+                    borderColor: 'rgba(34, 197, 94, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        document.getElementById('yearSelect').addEventListener('change', function () {
+            const selectedYear = this.value;
+            bookingsChart.data.datasets[0].data = yearData[selectedYear];
+            bookingsChart.update();
+        });
+
+        // Chart for Bookings by Countries
+        const ctx2 = document.getElementById('countriesChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Germany', 'South Africa', 'Singapore', 'India', 'UK', 'USA'],
+                datasets: [{
+                    label: 'Bookings',
+                    data: [10, 30, 60, 20, 15, 40],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            }
+        });
+    </script>
+
+</body>
+</html>

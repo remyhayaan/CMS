@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Countries</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0fbff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-content {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 26px;
+            color: #4a7743;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        .add-btn, .refresh-btn {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .countries-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .country-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .country-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .country-card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .country-name {
+            font-weight: bold;
+            font-style: italic;
+            color: #4a7743;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+
+        .country-desc {
+            font-size: 15px;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        .actions {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .edit-btn, .delete-btn {
+            border: none;
+            cursor: pointer;
+            padding: 7px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 22px;
+            }
+
+            .header-actions {
+                flex-direction: row; /* Ensure buttons are side by side */
+                gap: 12px;
+            }
+
+            .search-input {
+                width: 100%;
+                max-width: 250px;
+                margin-bottom: 15px;
+            }
+
+            .countries-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .country-card img {
+                height: 150px;
+            }
+
+            .country-name {
+                font-size: 16px;
+            }
+
+            .country-desc {
+                font-size: 14px;
+            }
+
+            .edit-btn, .delete-btn {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .countries-container {
+                grid-template-columns: 1fr;
+            }
+
+            .country-card img {
+                height: 130px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .country-name {
+                font-size: 14px;
+            }
+
+            .country-desc {
+                font-size: 13px;
+            }
+
+            .edit-btn, .delete-btn {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h2 class="title">Manage Countries</h2>
+        <div class="header-actions">
+            <button class="add-btn"><i class="fa-solid fa-plus"></i></button>
+            <button class="refresh-btn"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+
+        <div class="countries-container">
+            <div class="country-card">
+                <img src="../imgs/Chimp-Kibale.jpeg" alt="Uganda">
+                <div class="country-name">Uganda</div>
+                <div class="country-desc">Plan your trip to Uganda with our specialists.</div>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="country-card">
+                <img src="../imgs/Gorilla_Sabyinyo_Family.jpg" alt="Kenya">
+                <div class="country-name">Kenya</div>
+                <div class="country-desc">Discover the beauty of Kenya's wildlife and culture.</div>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="country-card">
+                <img src="../imgs/Gorilla_and_trekkers_in_Volcanoes_National_Park_Rwanda.jpg" alt="Tanzania">
+                <div class="country-name">Tanzania</div>
+                <div class="country-desc">Explore Tanzania's rich landscapes and safaris.</div>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+            <div class="country-card">
+                <img src="../imgs/Female_Mountain_Gorilla.jpeg" alt="Rwanda">
+                <div class="country-name">Rwanda</div>
+                <div class="country-desc">Experience the unique culture and scenery of Rwanda.</div>
+                <div class="actions">
+                    <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

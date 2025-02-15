@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Agents</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf8f1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 26px;
+            color: #4a7743;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .agents-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .agent-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            text-align: left;
+            transition: transform 0.3s;
+            border: 1px solid #85c88a;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .agent-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a7743;
+        }
+
+        .agent-info {
+            font-size: 15px;
+            color: #555;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        .agent-info a {
+            text-decoration: none;
+            color: #4a7743;
+        }
+
+        .agent-info a:hover {
+            text-decoration: underline;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .status-icon {
+            color: #4CAF50;
+            font-size: 18px;
+        }
+
+        .deactivate-btn {
+            border: 1px solid #85c88a;
+            background-color: white;
+            color: #4a7743;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .deactivate-btn:hover {
+            background-color: #85c88a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h2 class="title">Manage Agents</h2>
+
+        <div class="agents-container" id="agentsContainer">
+            <!-- Agent Cards will be injected here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const agents = [
+                { name: "Zac Mubiru", email: "isaac@mtailor.com", phone: "+256702360601", company: "Moxtech Developers", country: "Uganda", joined: "June 27th 2023", website: "#" },
+                { name: "Kimera Moxhus", email: "kimeramoxhus@gmail.com", phone: "0759130054", company: "Moxtech Developers", country: "Uganda", joined: "June 27th 2023", website: "#" },
+                { name: "Ibrahim Sekayi", email: "davsafaris@gmail.com", phone: "+256757795781", company: "Dav Safaris", country: "Uganda", joined: "June 28th 2023", website: "#" },
+                { name: "Ibrahim Sekayi", email: "davsafaris@gmail.com", phone: "+256757795781", company: "Dav Safaris", country: "Uganda", joined: "June 28th 2023", website: "#" },
+           
+                ];
+
+            const container = document.getElementById("agentsContainer");
+
+            agents.forEach(agent => {
+                const card = document.createElement("div");
+                card.classList.add("agent-card");
+
+                card.innerHTML = `
+                    <div class="agent-name">${agent.name}</div>
+                    <div class="agent-info">
+                        <div>${agent.email}</div>
+                        <div><strong>Tel. Number:</strong> ${agent.phone}</div>
+                        <div><strong>Co. Name:</strong> ${agent.company}</div>
+                        <div><strong>Country:</strong> ${agent.country}</div>
+                        <div><strong>Joined On:</strong> ${agent.joined}</div>
+                        <div><strong>Company Website:</strong> <a href="${agent.website}" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a></div>
+                    </div>
+                    <div class="actions">
+                        <i class="fa-solid fa-circle-check status-icon"></i>
+                        <button class="deactivate-btn">Deactivate</button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>

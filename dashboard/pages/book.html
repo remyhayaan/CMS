@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Tour</title>
+
+    <!-- Quill.js Styles -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <style>
+    
+        .form-body{
+            
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+              
+        }
+        .form-container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: green;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #editor {
+            height: 150px;
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .upload-box {
+            border: 2px dashed #28a745;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-box input {
+            display: none;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+
+        .itinerary-section {
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .quill-editor {
+            height: 120px;
+            background: white;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        /* Style for the two text inputs above the Quill editor */
+        .itinerary-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-body">
+    <div class="form-container">
+        <h2>Add New Tour</h2>
+
+        <!-- Title -->
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter tour title">
+
+        <!-- Description (Quill.js Rich Text Editor) -->
+        <label for="editor">Description:</label>
+        <div id="editor"></div>
+
+        <!-- Form Fields -->
+        <div class="form-group">
+            <div>
+                <label for="highlights">Tour Highlights:</label>
+                <textarea id="highlights" placeholder="Write each highlight on a new line"></textarea>
+            </div>
+            <div class="upload-box">
+                <label>Upload Cover Image</label>
+                <input type="file" id="imageUpload" accept="image/*">
+                <p>Click to upload</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="country">Country:</label>
+                <select id="country">
+                    <option value="">Select Country</option>
+                    <option value="Uganda">Uganda</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Tanzania">Tanzania</option>
+                </select>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="">Select Category</option>
+                    <option value="Safari">Safari</option>
+                    <option value="Hiking">Hiking</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="days">Number of Days:</label>
+                <input type="number" id="days" placeholder="Enter number of days">
+            </div>
+            <div>
+                <label for="price">Price ($):</label>
+                <input type="number" id="price" placeholder="Enter price">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <label for="priceIncludes">Price Includes:</label>
+                <textarea id="priceIncludes" placeholder="Write each item on a new line"></textarea>
+            </div>
+            <div>
+                <label for="priceExcludes">Price Excludes:</label>
+                <textarea id="priceExcludes" placeholder="Write each item on a new line"></textarea>
+            </div>
+        </div>
+
+        <!-- Itineraries Section -->
+        <div class="itinerary-section">
+            <h3>Itineraries</h3>
+
+            <!-- Text Inputs for Day and Itinerary Title above Quill editor -->
+            <div class="itinerary-inputs">
+                <div>
+                    <label for="itineraryDay">Day:</label>
+                    <input type="number" id="itineraryDay" placeholder="Day">
+                </div>
+                <div>
+                    <label for="itineraryTitle">Itinerary Title:</label>
+                    <input type="text" id="itineraryTitle" placeholder="Itinerary Title">
+                </div>
+            </div>
+
+            <!-- Quill editor for itinerary description (always visible) -->
+            <div class="quill-editor" id="itinerary-editor"></div>
+            
+            <div class="itinerary-inputs">
+                <div>
+                    <label for="itineraryDay">Meal Plan:</label>
+                    <input type="number" id="itineraryDay" placeholder="Day">
+                </div>
+                <div>
+                    <label for="itineraryTitle">Accomodation Plan:</label>
+                    <input type="text" id="itineraryTitle" placeholder="Itinerary Title">
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+            <button onclick="submitForm()">Submit</button>
+        </div>
+    </div>
+</div>
+    <!-- Quill.js Library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <script>
+        // Initialize Quill.js Editors
+        var quillDescription = new Quill('#editor', {
+            theme: 'snow'
+        });
+
+        // Initialize Quill editor for itinerary description (always visible)
+        var quillItinerary = new Quill('#itinerary-editor', {
+            theme: 'snow'
+        });
+
+        function submitForm() {
+            let title = document.getElementById('title').value;
+            let description = quillDescription.root.innerHTML;
+            let highlights = document.getElementById('highlights').value;
+            let country = document.getElementById('country').value;
+            let category = document.getElementById('category').value;
+            let days = document.getElementById('days').value;
+            let price = document.getElementById('price').value;
+            let priceIncludes = document.getElementById('priceIncludes').value;
+            let priceExcludes = document.getElementById('priceExcludes').value;
+            let image = document.getElementById('imageUpload').files[0];
+
+            let itineraryDescription = quillItinerary.root.innerHTML; // Get itinerary editor content
+            let itineraryDay = document.getElementById('itineraryDay').value;
+            let itineraryTitle = document.getElementById('itineraryTitle').value;
+
+            if (!title || !description || !country || !category || !days || !price || !image || !itineraryDay || !itineraryTitle) {
+                alert("Please fill all required fields!");
+                return;
+            }
+
+            console.log({
+                title,
+                description,
+                highlights,
+                country,
+                category,
+                days,
+                price,
+                priceIncludes,
+                priceExcludes,
+                image: image.name,
+                itineraryDescription,
+                itineraryDay,
+                itineraryTitle
+            });
+
+            alert("Form submitted successfully!");
+        }
+    </script>
+
+</body>
+</html>
